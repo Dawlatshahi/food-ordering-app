@@ -7,7 +7,7 @@ export default function MenuItemTile({ onAddToCart, ...item }) {
 		sizes?.length > 0 || extraIngredientPrices?.length > 0;
 
 	return (
-		<div className="bg-gray-200 p-4 rounded-lg text-center group hover:bg-white hover:shadow-md hover:shadow-black/25 transition-all flex flex-col h-96">
+		<div className="bg-gray-100  shadow-md p-4 rounded-lg text-center group hover:bg-white hover:shadow-md hover:shadow-black/25 transition-all flex flex-col h-96">
 			<div className="flex-grow">
 				<div className="text-center">
 					<img
@@ -18,6 +18,11 @@ export default function MenuItemTile({ onAddToCart, ...item }) {
 				</div>
 				<h4 className="font-semibold text-xl my-3">{name}</h4>
 				<p className="text-gray-500 text-sm line-clamp-3">{description}</p>
+			</div>
+			<div className="mt-4">
+				<p className="font-semibold text-lg text-gray-700">
+					${basePrice.toFixed(2)}
+				</p>
 			</div>
 			<div className="mt-auto">
 				<AddToCartButton

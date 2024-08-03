@@ -21,7 +21,7 @@ export default function AddToCartButton({
 			onClick={onClick}
 			className="mt-4 bg-primary text-white rounded-full px-8 py-2"
 		>
-			<span>Order Now (from ${basePrice})</span>
+			<span>Order Now </span>
 		</button>
 	);
 }
