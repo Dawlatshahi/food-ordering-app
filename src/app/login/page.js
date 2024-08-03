@@ -10,12 +10,31 @@ export default function LoginPage() {
 
 	async function handleFormSubmit(ev) {
 		ev.preventDefault();
+		console.log('Submitting login form');
 		setLoginInProgress(true);
 
-		await signIn('credentials', { email, password, callbackUrl: '/' });
+		const result = await signIn('credentials', {
+			email,
+			password,
+			redirect: false,
+		});
+
+		console.log('Sign-in result:', result);
+
+		if (result.ok) {
+			console.log('Login successful');
+			// Note: result object typically doesn't include email or password
+			// You have to manually log these values if needed
+			console.log('Email:', email);
+			console.log('Password:', password); // Be cautious with logging passwords
+		} else {
+			console.log('Login failed');
+			console.error('Error:', result.error);
+		}
 
 		setLoginInProgress(false);
 	}
+
 	return (
 		<section className="mt-8">
 			<h1 className="text-center text-primary text-4xl mb-4">Login</h1>
@@ -44,7 +63,7 @@ export default function LoginPage() {
 				</div>
 				<button
 					type="button"
-					onClick={() => signIn('google', { callbackUrl: '/' })}
+					onClick={() => signIn('google', { redirect: false })}
 					className="flex gap-4 justify-center"
 				>
 					<Image src={'/google.png'} alt={''} width={24} height={24} />

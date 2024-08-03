@@ -5,7 +5,7 @@ import ShoppingCart from '@/components/icons/ShoppingCart';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useContext, useState } from 'react';
-import { FaUser } from 'react-icons/fa'; // Import the profile icon from react-icons
+import { FaSignOutAlt, FaUser } from 'react-icons/fa'; // Import the profile and logout icons from react-icons
 
 function AuthLinks({ status, userName }) {
 	if (status === 'authenticated') {
@@ -15,13 +15,14 @@ function AuthLinks({ status, userName }) {
 					href={'/profile'}
 					className="flex items-center gap-2 whitespace-nowrap"
 				>
-					<FaUser /> {/* Profile Icon */}
-					Hello, {userName}
+					<FaUser className=" h-5" /> {/* Profile Icon */}
+					<span className="mt-1 text-md">{userName}</span>
 				</Link>
 				<button
 					onClick={() => signOut()}
-					className="bg-primary rounded-full text-white px-8 py-2"
+					className="bg-primary rounded-full text-white px-4 py-2 flex items-center gap-2 text-md"
 				>
+					<FaSignOutAlt /> {/* Logout Icon */}
 					Logout
 				</button>
 			</>
@@ -43,15 +44,19 @@ function AuthLinks({ status, userName }) {
 }
 
 export default function Header() {
-	const session = useSession();
-	const status = session?.status;
-	const userData = session.data?.user;
+	const { data: session, status } = useSession();
+	console.log('Session:', session);
+	console.log('Status:', status);
+
+	const userData = session?.user;
 	let userName = userData?.name || userData?.email;
 	const { cartProducts } = useContext(CartContext);
 	const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
 	if (userName && userName.includes(' ')) {
 		userName = userName.split(' ')[0];
 	}
+
 	return (
 		<header>
 			<div className="flex items-center md:hidden justify-between">
